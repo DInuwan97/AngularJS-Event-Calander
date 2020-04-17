@@ -97,10 +97,11 @@
 								<table class="table table-dark">
 										
 										<tbody style="width:80%">
-										  <tr ng-repeat="event in events | filter: search" ng-show="event.isExpire">
+										  <tr ng-repeat="event in events | filter: search | orderBy: 'dif'" ng-show="event.isExpire">
 											<td style="width:40%">{{event.eName}}</td>
 											<td>{{event.eDateTime}}</td>
 											<td>{{event.isExpire}}</td>
+											<td>{{event.dif}}</td>
 										
 											
 											<td>
@@ -154,17 +155,20 @@
 	<div class="modal-dialog" role="document">
 	  <div class="modal-content">
 		<div class="modal-header">
+				<h2 style="color:maroon">Oops!!!</h2>
 		  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
 		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		  </button>
 		</div>
 		<div class="modal-body">
-		  <label>Do youn want to dellete?</label>
+				<div class="form-group">
+						<h4 style="color:maroon">Do you want to Delete?</h4>
+				</div>
 		</div>
 		<div class="modal-footer">
 		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  <button  ng-click="removeEvent(event)" data-dismiss="modal" class="btn btn-primary">Yes</button>
+		  <button  ng-click="removeEvent(event)" data-dismiss="modal" class="btn btn-danger">Yes</button>
 		</div>
 	  </div>
 	</div>
