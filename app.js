@@ -34,8 +34,8 @@ app.directive('datetimepicker', function(){
 });
 
 app.controller('MyEvntOrganizerAppController', function($scope){
+
     $scope.date = moment()
-  
 
     function calculateDif(eDate){
 
@@ -47,6 +47,10 @@ app.controller('MyEvntOrganizerAppController', function($scope){
 
         console.log("Todays Date : " ,new Date());
         console.log("Sent Date : " ,((new Date(dateObj)).toLocaleDateString("en-US")));
+
+
+        var minTime = 0;
+
 
         if((new Date()).toLocaleDateString("en-US") <= (new Date(dateObj)).toLocaleDateString("en-US")){
             var dif = Math.abs(new Date(dateObj) - new Date());
@@ -75,7 +79,9 @@ app.controller('MyEvntOrganizerAppController', function($scope){
          console.log("give date : ", ((new Date(dateObj)).toLocaleDateString("en-US")));
          console.log('current date', (new Date()).toLocaleDateString("en-US"))
 
- 
+
+        console.log('Event Length : ' );
+        
          if((new Date()).toLocaleDateString("en-US") <= (new Date(dateObj)).toLocaleDateString("en-US")){
             console.log('Given Date is greater')
             return true;
@@ -84,6 +90,7 @@ app.controller('MyEvntOrganizerAppController', function($scope){
              return false;
          } 
 
+         
         
     }
 
@@ -98,18 +105,18 @@ app.controller('MyEvntOrganizerAppController', function($scope){
      
     }
 
-        $scope.updateEvent = function(event) {
+    $scope.updateEvent = function(event) {
            
-            angular.copy(event, {
-                eName:$scope.updateEvents.eName,
-                eDateTime:$scope.upateEvents.eDateTime,
-                isExpire: checkEvents($scope.upateEvents.eDateTime),
-                dif:calculateDif($scope.upateEvents.eDateTime)
-            });
+        angular.copy(event, {
+            eName:$scope.updateEvents.eName,
+            eDateTime:$scope.upateEvents.eDateTime,
+            isExpire: checkEvents($scope.upateEvents.eDateTime),
+            dif:calculateDif($scope.upateEvents.eDateTime)
+        });
 
-            $scope.updateEvents.eName="";
-            $scope.updateEvents.eDateTime="";
-        };
+        $scope.updateEvents.eName="";
+        $scope.updateEvents.eDateTime="";
+    };
     
 
 	$scope.addEvents = function(){
@@ -124,23 +131,58 @@ app.controller('MyEvntOrganizerAppController', function($scope){
         $scope.newEvents.eName="";
         $scope.newEvents.eDateTime="";
 
+        //getLatestEvent();
+
     }
 
+
+    $scope.getLatestEvent  = function() {
+
+   // var latestEventDif = $scope.events[0].dif;
+         
+       var latestEventDif = $scope.events[Object.keys($scope.events).length-1].dif;
+        for(var i = 0 ; i < (Object.keys($scope.events).length-1) ; i++){
+
+            if($scope.events[i].dif !== -1){            
+                if($scope.events[i].dif < latestEventDif){
+                    latestEventDif = $scope.events[i].dif;
+                }
+            }
+
+        }
+        
+        console.log('Latest Event dif : ',latestEventDif);
+       // var count = Object.keys($scope.events).length-1;
+        //console.log(count);
+
+        return latestEventDif;
+     
+    }
+
+
+   // $scope.latesEvent = $scope.getLatestEvent(); 
+
+
+    function hello(){
+        return 'hello';
+    }
+ //   getLatestEvent();
 
     $scope.events = [
         {
             id:1,
             eName:"BirthdayPary",
-            eDateTime:"16/04/2020 14:45",
-            isExpire: checkEvents("16/04/2020 14:45"),
-            dif:calculateDif("16/04/2020 14:45")
+            eDateTime:"19/04/2020 14:45",
+            isExpire: checkEvents("19/04/2020 14:45"),
+            dif:calculateDif("19/04/2020 14:45")
         },
         {
             id:2,
             eName:"Wedding",
-            eDateTime:"14/06/2020 14:45",
-            isExpire: checkEvents("14/06/2020 14:45"),
-            dif:calculateDif("14/06/2020 14:45")
+            eDateTime:"17/04/2020 14:45",
+            isExpire: checkEvents("17/04/2020 14:45"),
+            dif:calculateDif("17/04/2020 14:45"),
+
         },
         {
             id:3,
@@ -157,6 +199,7 @@ app.controller('MyEvntOrganizerAppController', function($scope){
             dif:calculateDif("20/06/2020 13:00")
         }
     ];
+
 
 
 });

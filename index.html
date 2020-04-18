@@ -87,7 +87,7 @@
 							</div>
 
 							<div class="col-md-4" style="float:right">
-								<label>Next Event is</label>
+								<label>{{getLatestEvent()/ (60000 * 60)}} hours remaing to next event</label>
 							
 							</div>
 
@@ -100,13 +100,13 @@
 										  <tr ng-repeat="event in events | filter: search | orderBy: 'dif'" ng-show="event.isExpire">
 											<td style="width:40%">{{event.eName}}</td>
 											<td>{{event.eDateTime}}</td>
-											<td>{{event.isExpire}}</td>
-											<td>{{event.dif}}</td>
+											<!-- <td>{{event.isExpire}}</td>
+											<td>{{event.dif}}</td> -->
 										
 											
 											<td>
 												<button type="button" data-toggle="modal" data-target="#update{{event.id}}" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></i></button>																																									
-												<button type="button"  data-toggle="modal" data-target="#delete{{event.id}}"  class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></i></button>
+												<button type="button"  ng-click="removeEvent(event)"  class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></i></button>
 
 												
 											<div id="update{{event.id}}" class="modal fade" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
